@@ -31,6 +31,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import { Edit } from "@mui/icons-material";
 
 interface IToDosList extends IDefaultListProps {
   toDoss: IToDos[];
@@ -143,7 +144,7 @@ const ToDosList = (props: IToDosList) => {
       <List>
         {toDoss.map((todo, index) => (
           <ListItem key={index}>
-            <ListItem onClick={(e) => onClick(e, todo._id)}>
+            <ListItem>
               <ListItemAvatar>
                 <Avatar src={todo.image} />
               </ListItemAvatar>
@@ -155,6 +156,9 @@ const ToDosList = (props: IToDosList) => {
             <ListItem>
               <ListItemText primary={`Situação: ${todo.check}`} />
             </ListItem>
+            <ListItemIcon onClick={(e) => onClick(e, todo._id)}>
+              <Edit />
+            </ListItemIcon>
             <ListItemIcon
               onClick={(e) => {
                 e.preventDefault();
