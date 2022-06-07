@@ -4,7 +4,6 @@ import { toDosApi } from "../../api/toDosApi";
 import { userprofileApi } from "../../../../userprofile/api/UserProfileApi";
 import SimpleTable from "/imports/ui/components/SimpleTable/SimpleTable";
 import _ from "lodash";
-
 import Add from "@mui/icons-material/Add";
 import Delete from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
@@ -26,6 +25,12 @@ import { IToDos } from "../../api/toDosSch";
 import { IConfigList } from "/imports/typings/IFilterProperties";
 import { Recurso } from "../../config/Recursos";
 import { RenderComPermissao } from "/imports/seguranca/ui/components/RenderComPermisao";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 
 interface IToDosList extends IDefaultListProps {
   toDoss: IToDos[];
@@ -124,25 +129,7 @@ const ToDosList = (props: IToDosList) => {
   };
 
   return (
-    <PageLayout title={"Lista de Exemplos"} actions={[]}>
-      <SearchDocField
-        api={userprofileApi}
-        subscribe={"getListOfusers"}
-        getOptionLabel={(doc) => doc.username || "error"}
-        sort={{ username: 1 }}
-        textToQueryFilter={(textoPesquisa) => {
-          textoPesquisa = textoPesquisa.replace(/[+[\\?()*]/g, "\\$&");
-          return { username: new RegExp(textoPesquisa, "i") };
-        }}
-        autocompleteOptions={{ noOptionsText: "Não encontrado" }}
-        name={"userId"}
-        label={"Pesquisar com SearchDocField"}
-        onChange={handleSearchDocChange}
-        placeholder={"Todos"}
-        showAll={false}
-        key={"SearchDocKey"}
-      />
-
+    <PageLayout title={"Lista de To Do's"} actions={[]}>
       <TextField
         name={"pesquisar"}
         label={"Pesquisar"}
@@ -152,7 +139,35 @@ const ToDosList = (props: IToDosList) => {
         placeholder="Digite aqui o que deseja pesquisa..."
         action={{ icon: "search", onClick: click }}
       />
-      <SimpleTable
+
+      <List>
+        {toDoss.map((todo, index) => (
+          <ListItem key={index}>
+            <ListItem onClick={(e) => onClick(e, todo._id)}>
+              <ListItemAvatar>
+                <Avatar src={todo.image} />
+              </ListItemAvatar>
+              <ListItemText
+                primary={todo.description}
+                secondary={todo.nomeUsuario}
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText primary={`Situação: ${todo.check}`} />
+            </ListItem>
+            <ListItemIcon
+              onClick={(e) => {
+                e.preventDefault();
+                callRemove(todo);
+              }}
+            >
+              <Delete />
+            </ListItemIcon>
+          </ListItem>
+        ))}
+      </List>
+
+      {/* <SimpleTable
         schema={_.pick(
           {
             ...toDosApi.schema,
@@ -163,7 +178,7 @@ const ToDosList = (props: IToDosList) => {
         data={toDoss}
         onClick={onClick}
         actions={[{ icon: <Delete />, id: "delete", onClick: callRemove }]}
-      />
+      /> */}
       <div
         style={{
           width: "100%",

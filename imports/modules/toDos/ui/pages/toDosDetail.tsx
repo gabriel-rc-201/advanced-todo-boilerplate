@@ -20,6 +20,15 @@ import { PageLayout } from "/imports/ui/layouts/pageLayout";
 import { IToDos } from "../../api/toDosSch";
 import { IMeteorError } from "/imports/typings/BoilerplateDefaultTypings";
 import { useTheme } from "@mui/material/styles";
+import {
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
+import CheckBoxField from "/imports/ui/components/SimpleFormFields/CheckBoxField/CheckBoxField";
 
 interface IToDosDetail {
   screenState: string;
@@ -92,38 +101,38 @@ const ToDosDetail = (props: IToDosDetail) => {
           <TextField placeholder="Titulo" name="title" />
           <TextField placeholder="Descrição" name="description" />
         </FormGroup>
+
         <FormGroup key={"fieldsTwo"}>
-          <SelectField placeholder="Selecione um tipo" name="type" />
-          <SelectField placeholder="Selecione alguns tipos" name="typeMulti" />
-        </FormGroup>
-        <FormGroup key={"fieldsThree"} formType={"subform"} name={"contacts"}>
-          <TextMaskField placeholder="Telefone" name="phone" />
-          <TextMaskField placeholder="CPF" name="cpf" />
-        </FormGroup>
-        <FormGroup key={"fieldsFour"} formType={"subformArray"} name={"tasks"}>
-          <TextField placeholder="Nome da Tarefa" name="name" />
-          <TextField placeholder="Descrição da Tarefa" name="description" />
-        </FormGroup>
-
-        <SliderField placeholder="Slider" name="slider" />
-
-        <RadioButtonField
-          placeholder="Opções da Tarefa"
-          name="statusRadio"
-          options={[
-            { value: "valA", label: "Valor A" },
-            { value: "valB", label: "Valor B" },
-            { value: "valC", label: "Valor C" },
-          ]}
-        />
-
-        <FormGroup key={"fields"}>
-          <AudioRecorder placeholder="Áudio" name="audio" />
-        </FormGroup>
-
-        <UploadFilesCollection name="files" label={"Arquivos"} doc={toDosDoc} />
-        <FormGroup key={"fieldsFive"} name={"chips"}>
-          <ChipInput name="chip" placeholder="Chip" />
+          <SelectField
+            name="check"
+            options={[
+              {
+                value: "Concluída",
+                label: "Concluída",
+                description: "tarefa concluída",
+              },
+              {
+                value: "Não Concluída",
+                label: "Não Concluída",
+                description: "tarefa não concluída",
+              },
+            ]}
+          />
+          <SelectField
+            name="private"
+            options={[
+              {
+                value: true,
+                label: "Sim",
+                description: "torna a tarefa privada",
+              },
+              {
+                value: false,
+                label: "Não",
+                description: "torna a tarefa pública",
+              },
+            ]}
+          />
         </FormGroup>
         <div
           key={"Buttons"}
@@ -205,9 +214,9 @@ export const ToDosDetailContainer = withTracker(
       toDosDoc,
       save: (doc: IToDos, callback: () => void) => {
         const selectedAction = screenState === "create" ? "insert" : "update";
-        toDosApi[selectedAction](doc, (e: IMeteorError, r: string) => {
+        toDosApi[selectedAction](doc, (e: IMeteorError) => {
           if (!e) {
-            navigate(`/toDos/view/${screenState === "create" ? r : doc._id}`);
+            navigate(`/toDos/list`);
             showNotification({
               type: "success",
               title: "Operação realizada!",

@@ -29,7 +29,13 @@ class ToDosApi extends ProductBase<IToDos> {
         const newFilter = { ...filter };
         const newOptions = {
           ...options,
-          projection: { image: 1, title: 1, description: 1, createdby: 1 },
+          projection: {
+            image: 1,
+            title: 1,
+            description: 1,
+            createdby: 1,
+            check: 1,
+          },
         };
         return this.defaultCollectionPublication(newFilter, newOptions);
       },
