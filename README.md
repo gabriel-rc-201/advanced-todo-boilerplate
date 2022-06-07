@@ -17,3 +17,5 @@
   - [x] Deve ser possível editar uma tarefa acionamento um botão que corresponda à tarefa exibida na lista. De preferência esse botão deve ser um ícone. Ao clicar nesse botão deve ser exibida uma tela que permite realizar a edição da tarefa. Ao editá-la o sistema deve voltar para a tela que lista todas as tarefas.
   - [x] EXTRA: Ao clicar na tarefa a visuaização dela deve ser exibida em uma tela modal.
   - [x] EXTRA: Fazer a mensagem de sucesso/erro vir do backend.
+  - [x] Ao clicar no “Check” da tarefa ela deve ser marcada como “Concluída”. Se o usuário clicar novamente ela deve mudar de situação para “Não concluída”. Adote alguma referência visual o textual para informar que a tarefa está concluída.
+  - [x] Assim como há um ícone para editar a tarefa, deve existir um ícone também que permite excluir a tarefa. Se preferir, pode adicionar um menu que contém as duas opções: Editar ou Excluir.

@@ -48,6 +48,7 @@ const ToDosList = (props: IToDosList) => {
     onSearch,
     total,
     loading,
+    check,
     setFilter,
     clearFilter,
     setPage,
@@ -64,6 +65,13 @@ const ToDosList = (props: IToDosList) => {
 
   const handleChangePage = (event: React.SyntheticEvent, newPage: number) => {
     setPage(newPage + 1);
+  };
+
+  const handleCheckToDo = (id, currentCheck) => {
+    check(id, currentCheck, (e, r) => {
+      console.log("Error", e);
+      console.log("Result", r);
+    });
   };
 
   const handleChangeRowsPerPage = (
@@ -142,32 +150,30 @@ const ToDosList = (props: IToDosList) => {
 
       <List>
         {toDoss.map((todo, index) => (
-          <ListItem key={index}>
+          <ListItem
+            key={index}
+            sx={{ bgcolor: todo.check === "Concluída" ? "green" : "" }}
+          >
             <ListItem
               onClick={() => {
                 showDrawer({
                   url: `/toDos/view/${todo._id}`,
-                  title: `${todo.description}`,
+                  title: `${todo.title}`,
                 });
               }}
             >
               <ListItemAvatar>
                 <Avatar src={todo.image} />
               </ListItemAvatar>
-              <ListItemText
-                primary={todo.description}
-                secondary={todo.nomeUsuario}
-              />
+              <ListItemText primary={todo.title} secondary={todo.nomeUsuario} />
+              <ListItemText primary={`Descição: ${todo.description}`} />
             </ListItem>
             <ListItem
               onClick={() => {
-                showDrawer({
-                  url: `/toDos/view/${todo._id}`,
-                  title: `${todo.description}`,
-                });
+                handleCheckToDo(todo._id, todo.check);
               }}
             >
-              <ListItemText primary={`Situação: ${todo.check}`} />
+              <ListItemText primary={`Check: ${todo.check}`} />
             </ListItem>
             <ListItemIcon onClick={(e) => onClick(e, todo._id)}>
               <Edit />
@@ -277,6 +283,8 @@ export const ToDosListContainer = withTracker(
     return {
       toDoss,
       loading: !!subHandle && !subHandle.ready(),
+      check: (id, currentCheck, callback) =>
+        toDosApi.checkToDo(id, currentCheck, callback),
       remove: (doc: IToDos) => {
         toDosApi.remove(doc, (e: IMeteorError, r) => {
           if (!e) {

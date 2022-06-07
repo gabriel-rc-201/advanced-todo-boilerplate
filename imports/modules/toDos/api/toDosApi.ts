@@ -6,6 +6,7 @@ import { Recurso } from "../config/Recursos";
 import { toDosSch, IToDos } from "./toDosSch";
 import { getUser } from "/imports/libs/getUser";
 import { userprofileApi } from "/imports/userprofile/api/UserProfileApi";
+import { check } from "meteor/check";
 // endregion
 
 class ToDosApi extends ProductBase<IToDos> {
@@ -30,7 +31,9 @@ class ToDosApi extends ProductBase<IToDos> {
         const newOptions = {
           ...options,
           projection: {
+            _id: 1,
             image: 1,
+            title: 1,
             description: 1,
             createdby: 1,
             check: 1,
@@ -51,7 +54,23 @@ class ToDosApi extends ProductBase<IToDos> {
       const newOptions = { ...options };
       return this.defaultCollectionPublication(newFilter, newOptions);
     });
+
+    this.registerMethod("checkToDo", this.serverCheckToDo);
   }
+
+  serverCheckToDo = (id: String, currentCheck: String, contex) => {
+    check(id, String);
+
+    const toDo = {
+      check: currentCheck === "Não Concluída" ? "Concluída" : "Não Concluída",
+    };
+
+    return this.serverUpdate({ _id: id, ...toDo }, contex);
+  };
+
+  checkToDo = (id: String, currentCheck: String, callback = () => {}) => {
+    this.callMethod("checkToDo", id, currentCheck, callback);
+  };
 }
 
 export const toDosApi = new ToDosApi();

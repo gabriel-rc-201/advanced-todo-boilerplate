@@ -83,6 +83,7 @@ const ToDosDetail = (props: IToDosDetail) => {
         <ImageCompactField label={"Imagem Zoom+Slider"} name={"image"} />
 
         <FormGroup key={"fieldsOne"}>
+          <TextField placeholder="Título" name="title" />
           <TextField placeholder="Descrição" name="description" />
         </FormGroup>
 
