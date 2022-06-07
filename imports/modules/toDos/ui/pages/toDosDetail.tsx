@@ -6,13 +6,7 @@ import SimpleForm from "../../../../ui/components/SimpleForm/SimpleForm";
 import Button from "@mui/material/Button";
 import FormGroup from "@mui/material/FormGroup";
 import TextField from "/imports/ui/components/SimpleFormFields/TextField/TextField";
-import TextMaskField from "../../../../ui/components/SimpleFormFields/TextMaskField/TextMaskField";
-import RadioButtonField from "../../../../ui/components/SimpleFormFields/RadioButtonField/RadioButtonField";
 import SelectField from "../../../../ui/components/SimpleFormFields/SelectField/SelectField";
-import UploadFilesCollection from "../../../../ui/components/SimpleFormFields/UploadFiles/uploadFilesCollection";
-import ChipInput from "../../../../ui/components/SimpleFormFields/ChipInput/ChipInput";
-import SliderField from "/imports/ui/components/SimpleFormFields/SliderField/SliderField";
-import AudioRecorder from "/imports/ui/components/SimpleFormFields/AudioRecorderField/AudioRecorder";
 import ImageCompactField from "/imports/ui/components/SimpleFormFields/ImageCompactField/ImageCompactField";
 import Print from "@mui/icons-material/Print";
 import Close from "@mui/icons-material/Close";
@@ -20,15 +14,6 @@ import { PageLayout } from "/imports/ui/layouts/pageLayout";
 import { IToDos } from "../../api/toDosSch";
 import { IMeteorError } from "/imports/typings/BoilerplateDefaultTypings";
 import { useTheme } from "@mui/material/styles";
-import {
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Select,
-} from "@mui/material";
-import CheckBoxField from "/imports/ui/components/SimpleFormFields/CheckBoxField/CheckBoxField";
 
 interface IToDosDetail {
   screenState: string;
@@ -98,7 +83,6 @@ const ToDosDetail = (props: IToDosDetail) => {
         <ImageCompactField label={"Imagem Zoom+Slider"} name={"image"} />
 
         <FormGroup key={"fieldsOne"}>
-          <TextField placeholder="Titulo" name="title" />
           <TextField placeholder="Descrição" name="description" />
         </FormGroup>
 

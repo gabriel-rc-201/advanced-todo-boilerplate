@@ -6,12 +6,6 @@ export const toDosSch = {
     optional: true,
     isImage: true,
   },
-  title: {
-    type: String,
-    label: "Título",
-    defaultValue: "",
-    optional: false,
-  },
   description: {
     type: String,
     label: "Descrição",
@@ -42,7 +36,6 @@ export const toDosSch = {
 export interface IToDos {
   _id?: string;
   image: string;
-  title: string;
   description: string;
   private: Boolean;
   check: String;

@@ -2,7 +2,6 @@ import React from "react";
 import { withTracker } from "meteor/react-meteor-data";
 import { toDosApi } from "../../api/toDosApi";
 import { userprofileApi } from "../../../../userprofile/api/UserProfileApi";
-import SimpleTable from "/imports/ui/components/SimpleTable/SimpleTable";
 import _ from "lodash";
 import Add from "@mui/icons-material/Add";
 import Delete from "@mui/icons-material/Delete";
@@ -15,7 +14,6 @@ import * as appStyle from "/imports/materialui/styles";
 import shortid from "shortid";
 import { PageLayout } from "/imports/ui/layouts/pageLayout";
 import TextField from "/imports/ui/components/SimpleFormFields/TextField/TextField";
-import SearchDocField from "/imports/ui/components/SimpleFormFields/SearchDocField/SearchDocField";
 import {
   IDefaultContainerProps,
   IDefaultListProps,
@@ -31,7 +29,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Edit } from "@mui/icons-material";
+import Edit from "@mui/icons-material/Edit";
 
 interface IToDosList extends IDefaultListProps {
   toDoss: IToDos[];
@@ -46,6 +44,7 @@ const ToDosList = (props: IToDosList) => {
     navigate,
     remove,
     showDialog,
+    showDrawer,
     onSearch,
     total,
     loading,
@@ -144,7 +143,14 @@ const ToDosList = (props: IToDosList) => {
       <List>
         {toDoss.map((todo, index) => (
           <ListItem key={index}>
-            <ListItem>
+            <ListItem
+              onClick={() => {
+                showDrawer({
+                  url: `/toDos/view/${todo._id}`,
+                  title: `${todo.description}`,
+                });
+              }}
+            >
               <ListItemAvatar>
                 <Avatar src={todo.image} />
               </ListItemAvatar>
@@ -153,7 +159,14 @@ const ToDosList = (props: IToDosList) => {
                 secondary={todo.nomeUsuario}
               />
             </ListItem>
-            <ListItem>
+            <ListItem
+              onClick={() => {
+                showDrawer({
+                  url: `/toDos/view/${todo._id}`,
+                  title: `${todo.description}`,
+                });
+              }}
+            >
               <ListItemText primary={`Situação: ${todo.check}`} />
             </ListItem>
             <ListItemIcon onClick={(e) => onClick(e, todo._id)}>
@@ -170,19 +183,6 @@ const ToDosList = (props: IToDosList) => {
           </ListItem>
         ))}
       </List>
-
-      {/* <SimpleTable
-        schema={_.pick(
-          {
-            ...toDosApi.schema,
-            nomeUsuario: { type: String, label: "Criado por" },
-          },
-          ["image", "title", "description", "nomeUsuario"]
-        )}
-        data={toDoss}
-        onClick={onClick}
-        actions={[{ icon: <Delete />, id: "delete", onClick: callRemove }]}
-      /> */}
       <div
         style={{
           width: "100%",
