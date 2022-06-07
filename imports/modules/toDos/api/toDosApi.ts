@@ -3,26 +3,26 @@ import { Meteor } from "meteor/meteor";
 import { ProductBase } from "../../../api/productBase";
 import { segurancaApi } from "/imports/seguranca/api/SegurancaApi";
 import { Recurso } from "../config/Recursos";
-import { exampleSch, IExample } from "./exampleSch";
+import { toDosSch, IToDos } from "./toDosSch";
 import { getUser } from "/imports/libs/getUser";
 import { userprofileApi } from "/imports/userprofile/api/UserProfileApi";
 // endregion
 
-class ExampleApi extends ProductBase<IExample> {
+class ToDosApi extends ProductBase<IToDos> {
   constructor() {
-    super("example", exampleSch, {
+    super("toDos", toDosSch, {
       enableCallMethodObserver: true,
       enableSubscribeObserver: true,
     });
 
     this.addTransformedPublication(
-      "exampleList",
+      "toDosList",
       (filter = {}, options = {}) => {
         const user = getUser();
 
         if (!segurancaApi.podeAcessarRecurso(user, Recurso.EXEMPLO_VIEW))
           throw new Meteor.Error(
-            "erro.example.permissaoInsuficiente",
+            "erro.toDos.permissaoInsuficiente",
             "Você não possui permissão o suficiente para visualizar estes dados!"
           );
 
@@ -33,7 +33,7 @@ class ExampleApi extends ProductBase<IExample> {
         };
         return this.defaultCollectionPublication(newFilter, newOptions);
       },
-      (doc: IExample & { nomeUsuario: string }) => {
+      (doc: IToDos & { nomeUsuario: string }) => {
         const userProfileDoc = userprofileApi
           .getCollectionInstance()
           .findOne({ _id: doc.createdby });
@@ -41,7 +41,7 @@ class ExampleApi extends ProductBase<IExample> {
       }
     );
 
-    this.addPublication("exampleDetail", (filter = {}, options = {}) => {
+    this.addPublication("toDosDetail", (filter = {}, options = {}) => {
       const newFilter = { ...filter };
       const newOptions = { ...options };
       return this.defaultCollectionPublication(newFilter, newOptions);
@@ -49,4 +49,4 @@ class ExampleApi extends ProductBase<IExample> {
   }
 }
 
-export const exampleApi = new ExampleApi();
+export const toDosApi = new ToDosApi();

@@ -1,28 +1,28 @@
 import React from "react";
-import { ExampleListContainer } from "./exampleList";
-import { ExampleDetailContainer } from "./exampleDetail";
+import { ToDosListContainer } from "./toDosList";
+import { ToDosDetailContainer } from "./toDosDetail";
 import { IDefaultContainerProps } from "/imports/typings/BoilerplateDefaultTypings";
 import { useParams } from "react-router-dom";
 
 export default (props: IDefaultContainerProps) => {
   const validState = ["view", "edit", "create"];
 
-  let { screenState, exampleId } = useParams();
+  let { screenState, toDosId } = useParams();
 
   const state = screenState ? screenState : props.screenState;
 
-  const id = exampleId ? exampleId : props.exampleId;
+  const id = toDosId ? toDosId : props.toDosId;
 
   if (!!state && validState.indexOf(state) !== -1) {
     if (state === "view" && !!id) {
-      return <ExampleDetailContainer {...props} screenState={state} id={id} />;
+      return <ToDosDetailContainer {...props} screenState={state} id={id} />;
     } else if (state === "edit" && !!id) {
       return (
-        <ExampleDetailContainer {...props} screenState={state} id={id} edit />
+        <ToDosDetailContainer {...props} screenState={state} id={id} edit />
       );
     } else if (state === "create") {
       return (
-        <ExampleDetailContainer
+        <ToDosDetailContainer
           DetailContainer
           {...props}
           screenState={state}
@@ -32,6 +32,6 @@ export default (props: IDefaultContainerProps) => {
       );
     }
   } else {
-    return <ExampleListContainer {...props} />;
+    return <ToDosListContainer {...props} />;
   }
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import Meteor from "meteor/meteor";
 import { withTracker } from "meteor/react-meteor-data";
-import { exampleApi } from "../../api/exampleApi";
+import { toDosApi } from "../../api/toDosApi";
 import SimpleForm from "../../../../ui/components/SimpleForm/SimpleForm";
 import Button from "@mui/material/Button";
 import FormGroup from "@mui/material/FormGroup";
@@ -17,26 +17,25 @@ import ImageCompactField from "/imports/ui/components/SimpleFormFields/ImageComp
 import Print from "@mui/icons-material/Print";
 import Close from "@mui/icons-material/Close";
 import { PageLayout } from "/imports/ui/layouts/pageLayout";
-import { IExample } from "../../api/exampleSch";
+import { IToDos } from "../../api/toDosSch";
 import { IMeteorError } from "/imports/typings/BoilerplateDefaultTypings";
 import { useTheme } from "@mui/material/styles";
 
-interface IExampleDetail {
+interface IToDosDetail {
   screenState: string;
   loading: boolean;
   isPrintView: boolean;
-  exampleDoc: IExample;
-  save: (doc: IExample, callback?: () => void) => void;
+  toDosDoc: IToDos;
+  save: (doc: IToDos, callback?: () => void) => void;
   navigate: (url: string | -1, state?: object) => void;
 }
 
-const ExampleDetail = (props: IExampleDetail) => {
-  const { isPrintView, screenState, loading, exampleDoc, save, navigate } =
-    props;
+const ToDosDetail = (props: IToDosDetail) => {
+  const { isPrintView, screenState, loading, toDosDoc, save, navigate } = props;
 
   const theme = useTheme();
 
-  const handleSubmit = (doc: IExample) => {
+  const handleSubmit = (doc: IToDos) => {
     save(doc);
   };
 
@@ -49,7 +48,7 @@ const ExampleDetail = (props: IExampleDetail) => {
           ? "Editar Exemplo"
           : "Criar exemplo"
       }
-      onBack={() => navigate("/example")}
+      onBack={() => navigate("/toDos")}
       actions={[
         !isPrintView ? (
           <span
@@ -59,7 +58,7 @@ const ExampleDetail = (props: IExampleDetail) => {
               color: theme.palette.secondary.main,
             }}
             onClick={() => {
-              navigate(`/example/printview/${exampleDoc._id}`);
+              navigate(`/toDos/printview/${toDosDoc._id}`);
             }}
           >
             <Print />
@@ -72,7 +71,7 @@ const ExampleDetail = (props: IExampleDetail) => {
               color: theme.palette.secondary.main,
             }}
             onClick={() => {
-              navigate(`/example/view/${exampleDoc._id}`);
+              navigate(`/toDos/view/${toDosDoc._id}`);
             }}
           >
             <Close />
@@ -82,8 +81,8 @@ const ExampleDetail = (props: IExampleDetail) => {
     >
       <SimpleForm
         mode={screenState}
-        schema={exampleApi.getSchema()}
-        doc={exampleDoc}
+        schema={toDosApi.getSchema()}
+        doc={toDosDoc}
         onSubmit={handleSubmit}
         loading={loading}
       >
@@ -122,11 +121,7 @@ const ExampleDetail = (props: IExampleDetail) => {
           <AudioRecorder placeholder="Áudio" name="audio" />
         </FormGroup>
 
-        <UploadFilesCollection
-          name="files"
-          label={"Arquivos"}
-          doc={exampleDoc}
-        />
+        <UploadFilesCollection name="files" label={"Arquivos"} doc={toDosDoc} />
         <FormGroup key={"fieldsFive"} name={"chips"}>
           <ChipInput name="chip" placeholder="Chip" />
         </FormGroup>
@@ -146,8 +141,8 @@ const ExampleDetail = (props: IExampleDetail) => {
               style={{ marginRight: 10 }}
               onClick={
                 screenState === "edit"
-                  ? () => navigate(`/example/view/${exampleDoc._id}`)
-                  : () => navigate(`/example/list`)
+                  ? () => navigate(`/toDos/view/${toDosDoc._id}`)
+                  : () => navigate(`/toDos/list`)
               }
               color={"secondary"}
               variant="contained"
@@ -160,7 +155,7 @@ const ExampleDetail = (props: IExampleDetail) => {
             <Button
               key={"b2"}
               onClick={() => {
-                navigate(`/example/edit/${exampleDoc._id}`);
+                navigate(`/toDos/edit/${toDosDoc._id}`);
               }}
               color={"primary"}
               variant="contained"
@@ -184,7 +179,7 @@ const ExampleDetail = (props: IExampleDetail) => {
   );
 };
 
-interface IExampleDetailContainer {
+interface IToDosDetailContainer {
   screenState: string;
   id: string;
   navigate: (url: string | -1, state?: object) => void;
@@ -195,24 +190,24 @@ interface IExampleDetailContainer {
   }) => void;
 }
 
-export const ExampleDetailContainer = withTracker(
-  (props: IExampleDetailContainer) => {
+export const ToDosDetailContainer = withTracker(
+  (props: IToDosDetailContainer) => {
     const { screenState, id, navigate, showNotification } = props;
 
     const subHandle = !!id
-      ? exampleApi.subscribe("exampleDetail", { _id: id })
+      ? toDosApi.subscribe("toDosDetail", { _id: id })
       : null;
-    let exampleDoc =
-      id && subHandle?.ready() ? exampleApi.findOne({ _id: id }) : {};
+    let toDosDoc =
+      id && subHandle?.ready() ? toDosApi.findOne({ _id: id }) : {};
 
     return {
       screenState,
-      exampleDoc,
-      save: (doc: IExample, callback: () => void) => {
+      toDosDoc,
+      save: (doc: IToDos, callback: () => void) => {
         const selectedAction = screenState === "create" ? "insert" : "update";
-        exampleApi[selectedAction](doc, (e: IMeteorError, r: string) => {
+        toDosApi[selectedAction](doc, (e: IMeteorError, r: string) => {
           if (!e) {
-            navigate(`/example/view/${screenState === "create" ? r : doc._id}`);
+            navigate(`/toDos/view/${screenState === "create" ? r : doc._id}`);
             showNotification({
               type: "success",
               title: "Operação realizada!",
@@ -232,4 +227,4 @@ export const ExampleDetailContainer = withTracker(
       },
     };
   }
-)(ExampleDetail);
+)(ToDosDetail);

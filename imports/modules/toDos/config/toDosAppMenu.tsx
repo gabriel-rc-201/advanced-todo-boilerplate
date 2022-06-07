@@ -1,9 +1,9 @@
 import React from "react";
 import Class from "@mui/icons-material/Class";
 
-export const exampleMenuItemList = [
+export const toDosMenuItemList = [
   {
-    path: "/example",
+    path: "/toDos",
     name: "Exemplos",
     icon: <Class />,
   },

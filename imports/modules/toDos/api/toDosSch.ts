@@ -1,4 +1,4 @@
-export const exampleSch = {
+export const toDosSch = {
   image: {
     type: String,
     label: "Imagem",
@@ -148,7 +148,7 @@ export const exampleSch = {
   },
 };
 
-export interface IExample {
+export interface IToDos {
   _id?: string;
   image: string;
   title: string;
