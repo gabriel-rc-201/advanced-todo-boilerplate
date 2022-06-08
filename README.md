@@ -23,3 +23,5 @@
   - [x] EXTRA: Fazer a mensagem de sucesso/erro vir do backend.
   - [x] Ao clicar no “Check” da tarefa ela deve ser marcada como “Concluída”. Se o usuário clicar novamente ela deve mudar de situação para “Não concluída”. Adote alguma referência visual o textual para informar que a tarefa está concluída.
   - [x] Assim como há um ícone para editar a tarefa, deve existir um ícone também que permite excluir a tarefa. Se preferir, pode adicionar um menu que contém as duas opções: Editar ou Excluir.
+
+- [x] História BMR-04 – Altere o sistema para permitir que somente o usuário que criou a tarefa consiga alterá-la ou excluí-la no entanto, todos podem vê-la.

@@ -30,6 +30,8 @@ import Avatar from "@mui/material/Avatar";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Edit from "@mui/icons-material/Edit";
+import { getUser } from "/imports/libs/getUser";
+import { showNotification } from "/imports/ui/AppGeneralComponents";
 
 interface IToDosList extends IDefaultListProps {
   toDoss: IToDos[];
@@ -59,8 +61,18 @@ const ToDosList = (props: IToDosList) => {
 
   const idToDos = shortid.generate();
 
-  const onClick = (event: React.SyntheticEvent, id: string) => {
-    navigate("/toDos/view/" + id);
+  const onClick = (event: React.SyntheticEvent, todo: IToDos) => {
+    const user = getUser();
+    if (todo.createdby !== user._id) {
+      showNotification({
+        type: "warnig",
+        title: "Operação não realizada!",
+        description: "Você não pode modificar esse To Do, ele não lhe pertence",
+      });
+
+      return;
+    }
+    navigate("/toDos/view/" + todo._id);
   };
 
   const handleChangePage = (event: React.SyntheticEvent, newPage: number) => {
@@ -178,7 +190,7 @@ const ToDosList = (props: IToDosList) => {
             >
               <ListItemText primary={`Check: ${todo.check}`} />
             </ListItem>
-            <ListItemIcon onClick={(e) => onClick(e, todo._id)}>
+            <ListItemIcon onClick={(e) => onClick(e, todo)}>
               <Edit />
             </ListItemIcon>
             <ListItemIcon

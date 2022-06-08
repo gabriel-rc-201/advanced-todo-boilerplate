@@ -14,6 +14,8 @@ import { PageLayout } from "/imports/ui/layouts/pageLayout";
 import { IToDos } from "../../api/toDosSch";
 import { IMeteorError } from "/imports/typings/BoilerplateDefaultTypings";
 import { useTheme } from "@mui/material/styles";
+import { getUser } from "/imports/libs/getUser";
+import { showNotification } from "/imports/ui/AppGeneralComponents";
 
 interface IToDosDetail {
   screenState: string;
@@ -149,6 +151,16 @@ const ToDosDetail = (props: IToDosDetail) => {
             <Button
               key={"b2"}
               onClick={() => {
+                const user = getUser();
+                if (toDosDoc.createdby !== user._id) {
+                  showNotification({
+                    type: "warnig",
+                    title: "Operação não realizada!",
+                    description:
+                      "Você não pode modificar esse To Do, ele não lhe pertence",
+                  });
+                  return;
+                }
                 navigate(`/toDos/edit/${toDosDoc._id}`);
               }}
               color={"primary"}
@@ -199,13 +211,14 @@ export const ToDosDetailContainer = withTracker(
       toDosDoc,
       save: (doc: IToDos, callback: () => void) => {
         const selectedAction = screenState === "create" ? "insert" : "update";
+
         toDosApi[selectedAction](doc, (e: IMeteorError) => {
           if (!e) {
             navigate(`/toDos/list`);
             showNotification({
               type: "success",
               title: "Operação realizada!",
-              description: `O exemplo foi ${
+              description: `O To Do foi ${
                 doc._id ? "atualizado" : "cadastrado"
               } com sucesso!`,
             });
