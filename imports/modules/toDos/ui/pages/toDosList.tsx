@@ -90,6 +90,7 @@ const ToDosList = (props: IToDosList) => {
     }
     setText(e.target.value);
   };
+
   const keyPress = (e: React.SyntheticEvent, a) => {
     // if (e.key === 'Enter') {
     if (text && text.trim().length > 0) {
@@ -165,8 +166,10 @@ const ToDosList = (props: IToDosList) => {
               <ListItemAvatar>
                 <Avatar src={todo.image} />
               </ListItemAvatar>
-              <ListItemText primary={todo.title} secondary={todo.nomeUsuario} />
-              <ListItemText primary={`Descição: ${todo.description}`} />
+              <ListItemText
+                primary={todo.description}
+                secondary={todo.nomeUsuario}
+              />
             </ListItem>
             <ListItem
               onClick={() => {
@@ -245,7 +248,7 @@ export const subscribeConfig = new ReactiveVar<IConfigList>({
 const toDosSearch = initSearch(
   toDosApi, // API
   subscribeConfig, // ReactiveVar subscribe configurations
-  ["title", "description"] // list of fields
+  ["description"] // list of fields
 );
 
 let onSearchToDosTyping: any;

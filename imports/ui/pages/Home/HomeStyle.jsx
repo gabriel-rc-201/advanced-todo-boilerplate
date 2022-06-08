@@ -31,6 +31,12 @@ const homeStyles = {
     textAlign: "justify",
     textJustify: "inter-word",
   },
+  paragraph: {
+    fontSize: isMobile ? "10px" : "17px",
+    paddingTop: isMobile ? "5px" : "5px",
+    paddingBottom: isMobile ? "10px" : "10px",
+    fontWeight: isMobile ? "150" : "150",
+  },
   containerHome: {
     marginTop: "2em",
     maxWidth: "100%",

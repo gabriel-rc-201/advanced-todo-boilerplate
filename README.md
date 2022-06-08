@@ -2,17 +2,16 @@
 
 - [x] História BMR-01 – O sistema só estará disponível para o usuário logado, ou seja, o acesso aos seus módulos depende de login e senha
 
-- [ ] História BMR-02 – Após fazer login no sistema o usuário será encaminhado para uma tela de boas vindas que apresentará….
+- [x] História BMR-02 – Após fazer login no sistema o usuário será encaminhado para uma tela de boas vindas que apresentará….
 
-> para fazer a home vou precisar
-> do usuário, pra poder dar olá no nome dele,
-> da lista dos ultimos 5 todos adicionados/atualizados
-> verificar a parte dos subscribes como filtro
-
-- [ ] uma lista com as 05 últimas tarefas adicionadas/atualizadas, com suas respectivas situações, com o título: “Atividades recentes”.
-  - [ ] ATENÇÃO: O filtro deve ser feito do lado do servidor, utilizando as publicações do meteor.
-- [ ] A tela deverá apresentar também um botão para acessar as tarefas do usuário, com o título “Minhas Tarefas”. Ao clicar nesse botão o usuário deverá ser encaminhado para a tela do módulo ToDo List.
-- [ ] Obs: Deve ser possível voltar para a tela de boas vindas e/ou acessar a tela do módulo ToDoList através do menu da aplicação.
+  - [x] uma lista com as 05 últimas tarefas adicionadas/atualizadas, com suas respectivas situações, com o título: “Atividades recentes”.
+    - [x] ATENÇÃO: O filtro deve ser feito do lado do servidor, utilizando as publicações do meteor.
+  - [x] A tela deverá apresentar também um botão para acessar as tarefas do usuário, com o título “Minhas Tarefas”. Ao clicar nesse botão o usuário deverá ser encaminhado para a tela do módulo ToDo List.
+  - [x] Obs: Deve ser possível voltar para a tela de boas vindas e/ou acessar a tela do módulo ToDoList através do menu da aplicação.
+    > para fazer a home vou precisar
+    > do usuário, pra poder dar olá no nome dele,
+    > da lista dos ultimos 5 todos adicionados/atualizados
+    > verificar a parte dos subscribes como filtro
 
 - [x] História BMR-03 – “ToDo List” com inserção,edição e lista de tarefas.
 
