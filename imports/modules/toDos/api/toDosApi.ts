@@ -27,7 +27,10 @@ class ToDosApi extends ProductBase<IToDos> {
             "Você não possui permissão o suficiente para visualizar estes dados!"
           );
 
-        const newFilter = { ...filter };
+        const newFilter = {
+          ...filter,
+          $or: [{ createdby: user._id }, { private: false }],
+        };
         const newOptions = {
           ...options,
           projection: {

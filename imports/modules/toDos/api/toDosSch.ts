@@ -30,7 +30,7 @@ export const toDosSch = {
   },
   check: {
     type: String,
-    label: "check box",
+    label: "Situação",
     optional: true,
     options: [
       { value: "Concluída", label: "Concluída" },

@@ -25,3 +25,9 @@
   - [x] Assim como há um ícone para editar a tarefa, deve existir um ícone também que permite excluir a tarefa. Se preferir, pode adicionar um menu que contém as duas opções: Editar ou Excluir.
 
 - [x] História BMR-04 – Altere o sistema para permitir que somente o usuário que criou a tarefa consiga alterá-la ou excluí-la no entanto, todos podem vê-la.
+
+- [ ] História BMR-05 – Altere o sistema para permitir que seja informada se a tarefa é pessoal ou não. Neste caso, se for uma tarefa pessoal, somente o usuário que criou a tarefa pode vê-la.
+  - [x] A definição se a tarefa é pessoal ou não será realizada na tela de criação/edição da tarefa.
+  - [x] Obs: trate essa restrição de visibilidade através da publicação do Meteor.
+  - [x] Permitir que a definição seja feita usando um Switch (componente do Material UI)
+  - [ ] EXTRA: Criar um wrapper para o Switch, tal como os outros componentes do SimpleForm

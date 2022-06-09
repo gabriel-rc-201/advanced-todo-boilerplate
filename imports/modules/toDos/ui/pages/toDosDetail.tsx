@@ -16,6 +16,8 @@ import { IMeteorError } from "/imports/typings/BoilerplateDefaultTypings";
 import { useTheme } from "@mui/material/styles";
 import { getUser } from "/imports/libs/getUser";
 import { showNotification } from "/imports/ui/AppGeneralComponents";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 interface IToDosDetail {
   screenState: string;
@@ -105,21 +107,13 @@ const ToDosDetail = (props: IToDosDetail) => {
               },
             ]}
           />
-          <SelectField
+
+          <FormControlLabel
+            control={<Switch />}
+            label="Privado"
             name="private"
-            options={[
-              {
-                value: true,
-                label: "Sim",
-                description: "torna a tarefa privada",
-              },
-              {
-                value: false,
-                label: "Não",
-                description: "torna a tarefa pública",
-              },
-            ]}
           />
+          {/* <Switch name="private" /> */}
         </FormGroup>
         <div
           key={"Buttons"}
