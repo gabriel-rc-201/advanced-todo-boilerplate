@@ -41,10 +41,10 @@ const ToDosDetail = (props: IToDosDetail) => {
     <PageLayout
       title={
         screenState === "view"
-          ? "Visualizar exemplo"
+          ? "Visualizar To Do"
           : screenState === "edit"
-          ? "Editar Exemplo"
-          : "Criar exemplo"
+          ? "Editar To Do"
+          : "Criar To Do"
       }
       onBack={() => navigate("/toDos")}
       actions={[
@@ -92,28 +92,31 @@ const ToDosDetail = (props: IToDosDetail) => {
         </FormGroup>
 
         <FormGroup key={"fieldsTwo"}>
-          <SelectField
-            name="check"
-            options={[
-              {
-                value: "Concluída",
-                label: "Concluída",
-                description: "tarefa concluída",
-              },
-              {
-                value: "Não Concluída",
-                label: "Não Concluída",
-                description: "tarefa não concluída",
-              },
-            ]}
-          />
+          {screenState === "edit" ? (
+            <SelectField
+              name="check"
+              options={[
+                {
+                  value: "Concluída",
+                  label: "Concluída",
+                  description: "tarefa concluída",
+                },
+                {
+                  value: "Não Concluída",
+                  label: "Não Concluída",
+                  description: "tarefa não concluída",
+                },
+              ]}
+            />
+          ) : (
+            <></>
+          )}
 
           <FormControlLabel
             control={<Switch />}
             label="Privado"
             name="private"
           />
-          {/* <Switch name="private" /> */}
         </FormGroup>
         <div
           key={"Buttons"}
@@ -205,6 +208,7 @@ export const ToDosDetailContainer = withTracker(
       toDosDoc,
       save: (doc: IToDos, callback: () => void) => {
         const selectedAction = screenState === "create" ? "insert" : "update";
+        if (selectedAction === "insert") doc.check = "Não Concluída";
 
         toDosApi[selectedAction](doc, (e: IMeteorError) => {
           if (!e) {
