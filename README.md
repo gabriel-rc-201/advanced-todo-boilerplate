@@ -27,7 +27,10 @@
 - [x] História BMR-04 – Altere o sistema para permitir que somente o usuário que criou a tarefa consiga alterá-la ou excluí-la no entanto, todos podem vê-la.
 
 - [ ] História BMR-05 – Altere o sistema para permitir que seja informada se a tarefa é pessoal ou não. Neste caso, se for uma tarefa pessoal, somente o usuário que criou a tarefa pode vê-la.
+
   - [x] A definição se a tarefa é pessoal ou não será realizada na tela de criação/edição da tarefa.
   - [x] Obs: trate essa restrição de visibilidade através da publicação do Meteor.
   - [x] Permitir que a definição seja feita usando um Switch (componente do Material UI)
   - [ ] EXTRA: Criar um wrapper para o Switch, tal como os outros componentes do SimpleForm
+
+- [x] História BMR-06 – Deve existir uma campo de pesquisa acima da lista de tarefas do módulo ToDoList de forma que o usuário consiga pesquisar as tarefas por alguma palavra que faz parte da sua descrição. **ATENÇÃO:** O filtro deve ser feito do lado do servidor, utilizando as publicações do meteor.
