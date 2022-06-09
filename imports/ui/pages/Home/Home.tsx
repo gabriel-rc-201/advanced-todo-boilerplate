@@ -56,7 +56,7 @@ const Home = (props) => {
                   <Avatar src={todo.image} />
                 </ListItemAvatar>
                 <ListItemText
-                  primary={todo.description}
+                  primary={todo.title}
                   secondary={todo.nomeUsuario}
                 />
               </ListItem>
@@ -80,7 +80,7 @@ const Home = (props) => {
 };
 
 export const HomeContainer = withTracker(() => {
-  const sort = { lastupdate: 1 };
+  const sort = { lastupdate: -1 };
 
   const filter = {};
 
