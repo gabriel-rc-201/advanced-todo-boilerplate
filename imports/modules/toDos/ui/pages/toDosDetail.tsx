@@ -92,7 +92,7 @@ const ToDosDetail = (props: IToDosDetail) => {
         </FormGroup>
 
         <FormGroup key={"fieldsTwo"}>
-          {screenState === "edit" ? (
+          {screenState !== "create" ? (
             <SelectField
               name="check"
               options={[
