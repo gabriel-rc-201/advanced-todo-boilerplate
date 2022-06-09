@@ -26,7 +26,7 @@
 
 - [x] História BMR-04 – Altere o sistema para permitir que somente o usuário que criou a tarefa consiga alterá-la ou excluí-la no entanto, todos podem vê-la.
 
-- [ ] História BMR-05 – Altere o sistema para permitir que seja informada se a tarefa é pessoal ou não. Neste caso, se for uma tarefa pessoal, somente o usuário que criou a tarefa pode vê-la.
+- [x] História BMR-05 – Altere o sistema para permitir que seja informada se a tarefa é pessoal ou não. Neste caso, se for uma tarefa pessoal, somente o usuário que criou a tarefa pode vê-la.
 
   - [x] A definição se a tarefa é pessoal ou não será realizada na tela de criação/edição da tarefa.
   - [x] Obs: trate essa restrição de visibilidade através da publicação do Meteor.
@@ -34,3 +34,17 @@
   - [ ] EXTRA: Criar um wrapper para o Switch, tal como os outros componentes do SimpleForm
 
 - [x] História BMR-06 – Deve existir uma campo de pesquisa acima da lista de tarefas do módulo ToDoList de forma que o usuário consiga pesquisar as tarefas por alguma palavra que faz parte da sua descrição. **ATENÇÃO:** O filtro deve ser feito do lado do servidor, utilizando as publicações do meteor.
+
+- [x] História BMR-07 – EXTRA: Na lista de tarefas, altere o ícone/imagem de forma que se a tarefa estiver aberta ela irá exibir um ícone de tarefa aberta e se estiver concluída deverá exibir um ícone informando que a tarefa está concluída.
+
+  > aqui o icone utilizado foi a imagem escolhido pelo usuário
+
+- [x] História BMR-08 – EXTRA: Adicione paginação na lista sde tarefas. O tamanho máximo da página deve ser de 4 tarefas por página.
+      Observação: Utilize SKIP e LIMIT nas pesquisas via MongoDB.
+      ATENÇÃO: O filtro deve ser feito do lado do servidor, utilizando as publicações do meteor
+
+- [ ] História BMR-09 – EXTRA: Ajuste visualmente sua aplicação
+  - [ ] Ajuste o estilo da aplicação para ela funcionar bem no celular
+    > Obs: utilize as configurações do browser (F12) para “simular” um acesso pelo celular.
+  - [ ] exercite seus conhecimentos de CSS e criação de componentes REACT.
+  - [ ] Faça alterações no tema: altere cores primérias, secundárias, etc.

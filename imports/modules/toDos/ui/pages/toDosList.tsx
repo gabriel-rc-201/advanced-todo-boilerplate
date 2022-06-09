@@ -1,13 +1,12 @@
 import React from "react";
 import { withTracker } from "meteor/react-meteor-data";
 import { toDosApi } from "../../api/toDosApi";
-import { userprofileApi } from "../../../../userprofile/api/UserProfileApi";
 import _ from "lodash";
 import Add from "@mui/icons-material/Add";
 import Delete from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
 import Fab from "@mui/material/Fab";
-import TablePagination from "@mui/material/TablePagination";
+import Pagination from "@mui/material/Pagination";
 import { ReactiveVar } from "meteor/reactive-var";
 import { initSearch } from "../../../../libs/searchUtils";
 import * as appStyle from "/imports/materialui/styles";
@@ -75,8 +74,11 @@ const ToDosList = (props: IToDosList) => {
     navigate("/toDos/view/" + todo._id);
   };
 
-  const handleChangePage = (event: React.SyntheticEvent, newPage: number) => {
-    setPage(newPage + 1);
+  const handleChangePage = (
+    event: React.ChangeEvent<unknown>,
+    newPage: number
+  ) => {
+    setPage(newPage);
   };
 
   const handleCheckToDo = (id, currentCheck) => {
@@ -210,22 +212,10 @@ const ToDosList = (props: IToDosList) => {
         }}
       >
         {/* @ts-ignore */}
-        <TablePagination
+        <Pagination
+          count={Math.ceil(total / 4)}
           style={{ width: "fit-content", overflow: "unset" }}
-          rowsPerPageOptions={[10, 25, 50, 100]}
-          labelRowsPerPage={<div style={{ width: 0, padding: 0, margin: 0 }} />}
-          component="div"
-          count={total}
-          rowsPerPage={pageProperties.pageSize}
-          page={pageProperties.currentPage - 1}
-          onPageChange={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-          labelDisplayedRows={({ from, to, count }) =>
-            `${from}-${to} de ${count}`
-          }
-          SelectProps={{
-            inputProps: { "aria-label": "rows per page" },
-          }}
+          onChange={handleChangePage}
         />
       </div>
 
@@ -247,7 +237,7 @@ const ToDosList = (props: IToDosList) => {
 export const subscribeConfig = new ReactiveVar<IConfigList>({
   pageProperties: {
     currentPage: 1,
-    pageSize: 25,
+    pageSize: 4,
   },
   sortProperties: { field: "createdat", sortAscending: true },
   filter: {},
@@ -349,7 +339,7 @@ export const ToDosListContainer = withTracker(
         config.sortProperties = sort;
         subscribeConfig.set(config);
       },
-      setPageSize: (size = 25) => {
+      setPageSize: (size = 4) => {
         config.pageProperties.pageSize = size;
         subscribeConfig.set(config);
       },
