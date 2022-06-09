@@ -18,8 +18,7 @@ import * as appStyle from "/imports/materialui/styles";
 import Container from "@mui/material/Container";
 import { IAppMenu } from "/imports/modules/modulesTypings";
 import { IUserProfile } from "/imports/userprofile/api/UserProfileSch";
-import { FormControlLabel, Theme } from "@mui/material";
-import Switch from "@mui/material/Switch";
+import { Theme } from "@mui/material";
 
 const HomeIconButton = ({ navigate }: any) => {
   return (
@@ -101,18 +100,6 @@ const AppNavBar = (props: IAppNavBar) => {
           backgroundColor: theme.palette.primary.main,
         }}
       >
-        <FormControlLabel
-          control={
-            <Switch
-              color={"secondary"}
-              value={props.themeOptions.isDarkThemeMode}
-              onChange={(evt) =>
-                props.themeOptions.setDarkThemeMode(evt.target.checked)
-              }
-            />
-          }
-          label="DarkMode"
-        />
         <Tabs value={pathIndex} aria-label="icon label tabs example" centered>
           {(Modules.getAppMenuItemList() || [])
             .filter(
@@ -153,52 +140,6 @@ const AppNavBar = (props: IAppNavBar) => {
     <AppBar position="static" enableColorOnDark>
       <Container style={appLayoutMenuStyle.containerFixedMenu}>
         <HomeIconButton navigate={navigate} />
-        <FormControlLabel
-          control={
-            <Switch
-              color={"secondary"}
-              value={props.themeOptions.isDarkThemeMode}
-              onChange={(evt) =>
-                props.themeOptions.setDarkThemeMode(evt.target.checked)
-              }
-            />
-          }
-          label="DarkMode"
-        />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            border: "1px solid #CCC",
-          }}
-        >
-          <Button
-            variant={"contained"}
-            color={"secondary"}
-            style={{ width: 40, height: 40 }}
-            onClick={() =>
-              props.themeOptions.setFontScale(
-                props.themeOptions.fontScale * 0.85
-              )
-            }
-          >
-            {"-"}
-          </Button>
-          {"FontSize"}
-          <Button
-            variant={"contained"}
-            color={"secondary"}
-            style={{ width: 40, height: 40 }}
-            onClick={() =>
-              props.themeOptions.setFontScale(
-                props.themeOptions.fontScale * 1.15
-              )
-            }
-          >
-            {"+"}
-          </Button>
-        </div>
 
         <Toolbar style={appLayoutMenuStyle.toolbarFixedMenu}>
           <div style={appNavBarStyle.containerNavBar}>
