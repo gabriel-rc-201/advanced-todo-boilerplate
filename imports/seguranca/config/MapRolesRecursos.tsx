@@ -1,4 +1,4 @@
-import { Recurso as Exemplo } from "/imports/modules/example/config/Recursos";
+import { Recurso as Exemplo } from "/imports/modules/toDos/config/Recursos";
 
 import { RoleType } from "/imports/seguranca/config/RoleType";
 
