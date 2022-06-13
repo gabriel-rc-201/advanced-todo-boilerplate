@@ -12,9 +12,4 @@ export const userProfileRouterList = [
     component: UserProfileContainer,
     isProtected: true,
   },
-  {
-    path: "/userprofile",
-    component: UserProfileContainer,
-    isProtected: true,
-  },
 ];

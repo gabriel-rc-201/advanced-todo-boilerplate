@@ -3,35 +3,40 @@ import { useNavigate } from "react-router-dom";
 
 import { withTracker } from "meteor/react-meteor-data";
 
-import Container from "@mui/material/Container";
 import * as appStyle from "/imports/materialui/styles";
-import { getUser } from "/imports/libs/getUser";
-import Typography from "@mui/material/Typography";
-import { toDosApi } from "/imports/modules/toDos/api/toDosApi";
+import { homeStyles } from "./HomeStyle";
+
+import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
+import { getUser } from "/imports/libs/getUser";
+import { toDosApi } from "/imports/modules/toDos/api/toDosApi";
 import { ToDo } from "../../../modules/toDos/ui/pages/Todo";
 
 const Home = (props) => {
   const user = getUser();
 
-  const { toDos, check, loading } = props;
+  const { toDos, loading } = props;
 
   const navigate = useNavigate();
 
   return (
-    <>
-      <Container>
-        <Typography style={appStyle.h1(1)} variant="h1">
+    <Box sx={homeStyles.containerHome}>
+      <Box sx={homeStyles.homeGreetings}>
+        <Typography style={appStyle.h1(0.7)} variant="h1">
           {`Olá, ${user.username}`}
         </Typography>
-        <Typography style={appStyle.body1(1.2)}>
+        <Typography style={appStyle.body1(1)}>
           {
             "Seus projetos muito mais organizados. Veja as tarefas adicionadas por seu time, por você e para você!"
           }
         </Typography>
+      </Box>
 
-        <Typography style={appStyle.h2(1)} variant="h2">
+      <Box sx={homeStyles.homeList}>
+        <Typography style={appStyle.h2(0.7)} variant="h2">
           {"Adicionadas Recentemente"}
         </Typography>
 
@@ -40,12 +45,12 @@ const Home = (props) => {
             <ToDo todo={todo} index={index} home={true} />
           ))}
         </List>
+      </Box>
 
-        <Button variant="contained" onClick={() => navigate("/toDos")}>
-          {"Minhas Tarefas >>"}
-        </Button>
-      </Container>
-    </>
+      <Button variant="contained" onClick={() => navigate("/toDos")}>
+        {"Minhas Tarefas >>"}
+      </Button>
+    </Box>
   );
 };
 
@@ -69,8 +74,6 @@ export const HomeContainer = withTracker(() => {
   return {
     toDos,
     loading: !!subHandle && !subHandle.ready(),
-    check: (id, currentCheck, callback) =>
-      toDosApi.checkToDo(id, currentCheck, callback),
   };
 })(Home);
 

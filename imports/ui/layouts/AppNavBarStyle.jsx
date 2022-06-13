@@ -14,6 +14,8 @@
 
  */
 
+import * as appStyle from "/imports/materialui/styles";
+
 const appNavBarStyle = {
   containerNavBar: {
     display: "flex",
@@ -42,7 +44,7 @@ const appNavBarStyle = {
     textTransform: "none",
   },
   accountCircle: {
-    color: "#3e6b01",
+    color: appStyle.secondaryColor,
   },
   dropDown: {
     color: "#ffffff",

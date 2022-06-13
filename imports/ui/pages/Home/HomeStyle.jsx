@@ -38,9 +38,21 @@ const homeStyles = {
     fontWeight: isMobile ? "150" : "150",
   },
   containerHome: {
-    marginTop: "2em",
+    display: "flex",
+    flexDirection: "column",
+    flexGrow: 1,
+    margin: 7,
+    marginTop: 3,
+    overflow: "auto",
     maxWidth: "100%",
     maxHeight: "100%",
+  },
+  homeGreetings: {
+    display: "grid",
+    gap: 3,
+  },
+  homeList: {
+    marginTop: 5,
   },
 };
 

@@ -33,7 +33,5 @@ export default (props: IDefaultContainerProps) => {
         <UserProfileDetailContainer {...props} screenState={state} create />
       );
     }
-  } else {
-    return <UserProfileListContainer {...props} />;
   }
 };

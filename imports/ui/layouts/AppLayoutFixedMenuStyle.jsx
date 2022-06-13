@@ -14,6 +14,9 @@
 
  */
 
+import { red } from "@mui/material/colors";
+import * as AppStyle from "../../materialui/styles";
+
 const appLayoutMenuStyle = {
   containerFixedMenuRouter: {
     display: "flex",
@@ -44,6 +47,13 @@ const appLayoutMenuStyle = {
     height: "50px",
     margin: "4.8px 0 4.4px 27px",
     objectFit: "contain",
+  },
+  homeText: {
+    fontWeight: "Bold",
+    fontSize: 20,
+    "&:hover": {
+      cursor: "pointer",
+    },
   },
   containerFixedMenu: {
     display: "flex",

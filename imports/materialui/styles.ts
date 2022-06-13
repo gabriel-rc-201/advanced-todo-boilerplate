@@ -17,16 +17,16 @@
 import { isMobile } from "/imports/libs/deviceVerify";
 
 // Cores principais
-const primaryColor = "#5a9902";
-const primaryColorDark = "#307000";
+const primaryColor = "#312276";
+const primaryColorDark = "#312276";
 
-const primaryBlue = "#0071bb";
-const primaryGreen = "#00b4c2";
+const primaryBlue = "#313FA7";
+const primaryGreen = "#31A76C";
 const primaryGradient = `linear-gradient(to right, ${primaryBlue} 0%, ${primaryGreen} 100%)`;
 const primaryGradientOnHover = `linear-gradient(to left, ${primaryBlue} 0%, ${primaryGreen} 100%)`;
 
-const secondaryColor = "#3e6b01";
-const secondaryColorDark = "#213a1d";
+const secondaryColor = "#5732F9";
+const secondaryColorDark = "#2b26e9";
 const secondaryColorOnHover = "rgba(0, 0, 0, 0.15)";
 
 // Cores de texto

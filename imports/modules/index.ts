@@ -16,11 +16,7 @@ class Modules implements IModules {
     ];
 
     // Create modules App Menu Item list
-    this.modulesAppMenuItemList = [
-      ...pages.pagesMenuItemList,
-      ...userprofile.userProfileMenuItemList,
-      ...toDos.toDosMenuItemList,
-    ];
+    // this.modulesAppMenuItemList = [...pages.pagesMenuItemList];
   }
 
   /**
