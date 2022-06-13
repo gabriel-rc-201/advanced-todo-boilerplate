@@ -9,23 +9,13 @@ import { getUser } from "/imports/libs/getUser";
 import Typography from "@mui/material/Typography";
 import { toDosApi } from "/imports/modules/toDos/api/toDosApi";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import ListItemText from "@mui/material/ListItemText";
 import Button from "@mui/material/Button";
+import { ToDo } from "../../../modules/toDos/ui/pages/Todo";
 
 const Home = (props) => {
   const user = getUser();
 
   const { toDos, check, loading } = props;
-
-  const handleCheckToDo = (id, currentCheck) => {
-    check(id, currentCheck, (e, r) => {
-      console.log("Error", e);
-      console.log("Result", r);
-    });
-  };
 
   const navigate = useNavigate();
 
@@ -47,27 +37,7 @@ const Home = (props) => {
 
         <List>
           {toDos.map((todo, index) => (
-            <ListItem
-              key={index}
-              sx={{ bgcolor: todo.check === "Concluída" ? "green" : "" }}
-            >
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar src={todo.image} />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={todo.title}
-                  secondary={todo.nomeUsuario}
-                />
-              </ListItem>
-              <ListItem
-                onClick={() => {
-                  handleCheckToDo(todo._id, todo.check);
-                }}
-              >
-                <ListItemText primary={`Check: ${todo.check}`} />
-              </ListItem>
-            </ListItem>
+            <ToDo todo={todo} index={index} home={true} />
           ))}
         </List>
 

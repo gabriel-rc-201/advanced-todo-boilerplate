@@ -23,14 +23,9 @@ import { IConfigList } from "/imports/typings/IFilterProperties";
 import { Recurso } from "../../config/Recursos";
 import { RenderComPermissao } from "/imports/seguranca/ui/components/RenderComPermisao";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Edit from "@mui/icons-material/Edit";
 import { getUser } from "/imports/libs/getUser";
 import { showNotification } from "/imports/ui/AppGeneralComponents";
+import { ToDo } from "./Todo";
 
 interface IToDosList extends IDefaultListProps {
   toDoss: IToDos[];
@@ -49,7 +44,6 @@ const ToDosList = (props: IToDosList) => {
     onSearch,
     total,
     loading,
-    check,
     setFilter,
     clearFilter,
     setPage,
@@ -79,20 +73,6 @@ const ToDosList = (props: IToDosList) => {
     newPage: number
   ) => {
     setPage(newPage);
-  };
-
-  const handleCheckToDo = (id, currentCheck) => {
-    check(id, currentCheck, (e, r) => {
-      console.log("Error", e);
-      console.log("Result", r);
-    });
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setPageSize(parseInt(event.target.value, 10));
-    setPage(1);
   };
 
   const [text, setText] = React.useState(searchBy || "");
@@ -147,10 +127,6 @@ const ToDosList = (props: IToDosList) => {
     showDialog(dialogOptions);
   };
 
-  const handleSearchDocChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    !!e.target.value ? setFilter({ createdby: e.target.value }) : clearFilter();
-  };
-
   return (
     <PageLayout title={"Lista de To Do's"} actions={[]}>
       <TextField
@@ -165,42 +141,14 @@ const ToDosList = (props: IToDosList) => {
 
       <List>
         {toDoss.map((todo, index) => (
-          <ListItem
-            key={index}
-            sx={{ bgcolor: todo.check === "Concluída" ? "green" : "" }}
-          >
-            <ListItem
-              onClick={() => {
-                showDrawer({
-                  url: `/toDos/view/${todo._id}`,
-                  title: `${todo.title}`,
-                });
-              }}
-            >
-              <ListItemAvatar>
-                <Avatar src={todo.image} />
-              </ListItemAvatar>
-              <ListItemText primary={todo.title} secondary={todo.nomeUsuario} />
-            </ListItem>
-            <ListItem
-              onClick={() => {
-                handleCheckToDo(todo._id, todo.check);
-              }}
-            >
-              <ListItemText primary={`Check: ${todo.check}`} />
-            </ListItem>
-            <ListItemIcon onClick={(e) => onClick(e, todo)}>
-              <Edit />
-            </ListItemIcon>
-            <ListItemIcon
-              onClick={(e) => {
-                e.preventDefault();
-                callRemove(todo);
-              }}
-            >
-              <Delete />
-            </ListItemIcon>
-          </ListItem>
+          <ToDo
+            todo={todo}
+            index={index}
+            home={false}
+            showDrawer={showDrawer}
+            onClick={onClick}
+            callRemove={callRemove}
+          />
         ))}
       </List>
       <div
@@ -285,8 +233,6 @@ export const ToDosListContainer = withTracker(
     return {
       toDoss,
       loading: !!subHandle && !subHandle.ready(),
-      check: (id, currentCheck, callback) =>
-        toDosApi.checkToDo(id, currentCheck, callback),
       remove: (doc: IToDos) => {
         toDosApi.remove(doc, (e: IMeteorError, r) => {
           if (!e) {
