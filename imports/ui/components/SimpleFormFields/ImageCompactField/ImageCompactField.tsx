@@ -354,9 +354,8 @@ export default ({
         <Button
           key={"b1"}
           style={{
-            width: "fit-content",
-            height: 25,
-            padding: "21.5px 75.5px 18.9px 74.9px",
+            width: 150,
+            height: 50,
             borderRadius: "8px",
             backgroundColor: "#e26139",
             marginTop: "10px",

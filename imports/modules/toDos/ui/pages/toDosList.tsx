@@ -173,6 +173,7 @@ const ToDosList = (props: IToDosList) => {
             id={"add"}
             onClick={() => navigate(`/toDos/create/${idToDos}`)}
             color={"primary"}
+            sx={{ fontColor: "#FFF" }}
           >
             <Add />
           </Fab>
