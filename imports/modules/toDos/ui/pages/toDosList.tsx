@@ -7,10 +7,12 @@ import Delete from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
 import Fab from "@mui/material/Fab";
 import Pagination from "@mui/material/Pagination";
+import Box from "@mui/material/Box";
 import { ReactiveVar } from "meteor/reactive-var";
 import { initSearch } from "../../../../libs/searchUtils";
 import * as appStyle from "/imports/materialui/styles";
 import shortid from "shortid";
+import { toDoListStyles } from "./style/toDosListStyle";
 import { PageLayout } from "/imports/ui/layouts/pageLayout";
 import TextField from "/imports/ui/components/SimpleFormFields/TextField/TextField";
 import {
@@ -128,15 +130,16 @@ const ToDosList = (props: IToDosList) => {
   };
 
   return (
-    <PageLayout title={"Lista de To Do's"} actions={[]}>
+    <Box sx={toDoListStyles.toDoListContainer}>
       <TextField
         name={"pesquisar"}
-        label={"Pesquisar"}
+        label={"🔍 Pesquisar"}
         value={text}
         onChange={change}
         onKeyPress={keyPress}
-        placeholder="Digite aqui o que deseja pesquisa..."
+        placeholder="🔍 Digite aqui o que deseja pesquisa..."
         action={{ icon: "search", onClick: click }}
+        sx={toDoListStyles.searchField}
       />
 
       <List>
@@ -151,7 +154,7 @@ const ToDosList = (props: IToDosList) => {
           />
         ))}
       </List>
-      <div
+      <Box
         style={{
           width: "100%",
           display: "flex",
@@ -165,10 +168,10 @@ const ToDosList = (props: IToDosList) => {
           style={{ width: "fit-content", overflow: "unset" }}
           onChange={handleChangePage}
         />
-      </div>
+      </Box>
 
       <RenderComPermissao recursos={[Recurso.EXEMPLO_CREATE]}>
-        <div style={appStyle.fabContainer}>
+        <Box style={appStyle.fabContainer}>
           <Fab
             id={"add"}
             onClick={() => navigate(`/toDos/create/${idToDos}`)}
@@ -177,9 +180,9 @@ const ToDosList = (props: IToDosList) => {
           >
             <Add />
           </Fab>
-        </div>
+        </Box>
       </RenderComPermissao>
-    </PageLayout>
+    </Box>
   );
 };
 
@@ -188,7 +191,7 @@ export const subscribeConfig = new ReactiveVar<IConfigList>({
     currentPage: 1,
     pageSize: 4,
   },
-  sortProperties: { field: "createdat", sortAscending: true },
+  sortProperties: { field: "createdat", sortAscending: false },
   filter: {},
   searchBy: null,
 });
@@ -196,7 +199,7 @@ export const subscribeConfig = new ReactiveVar<IConfigList>({
 const toDosSearch = initSearch(
   toDosApi, // API
   subscribeConfig, // ReactiveVar subscribe configurations
-  ["description"] // list of fields, pesquisa utilizando somente a descrição
+  ["title"] // list of fields, pesquisa utilizando somente o título
 );
 
 let onSearchToDosTyping: any;

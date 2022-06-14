@@ -1,23 +1,25 @@
 import React from "react";
 import Meteor from "meteor/meteor";
 import { withTracker } from "meteor/react-meteor-data";
+import { IToDos } from "../../api/toDosSch";
 import { toDosApi } from "../../api/toDosApi";
 import SimpleForm from "../../../../ui/components/SimpleForm/SimpleForm";
-import Button from "@mui/material/Button";
-import FormGroup from "@mui/material/FormGroup";
-import TextField from "/imports/ui/components/SimpleFormFields/TextField/TextField";
 import SelectField from "../../../../ui/components/SimpleFormFields/SelectField/SelectField";
+import { getUser } from "/imports/libs/getUser";
+import * as appStyle from "/imports/materialui/styles";
+import { PageLayout } from "/imports/ui/layouts/pageLayout";
+import { showNotification } from "/imports/ui/AppGeneralComponents";
+import { IMeteorError } from "/imports/typings/BoilerplateDefaultTypings";
+import TextField from "/imports/ui/components/SimpleFormFields/TextField/TextField";
 import ImageCompactField from "/imports/ui/components/SimpleFormFields/ImageCompactField/ImageCompactField";
 import Print from "@mui/icons-material/Print";
 import Close from "@mui/icons-material/Close";
-import { PageLayout } from "/imports/ui/layouts/pageLayout";
-import { IToDos } from "../../api/toDosSch";
-import { IMeteorError } from "/imports/typings/BoilerplateDefaultTypings";
-import { useTheme } from "@mui/material/styles";
-import { getUser } from "/imports/libs/getUser";
-import { showNotification } from "/imports/ui/AppGeneralComponents";
+import Button from "@mui/material/Button";
 import Switch from "@mui/material/Switch";
+import FormGroup from "@mui/material/FormGroup";
+import { useTheme } from "@mui/material/styles";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import Typography from "@mui/material/Typography";
 
 interface IToDosDetail {
   screenState: string;
@@ -86,38 +88,59 @@ const ToDosDetail = (props: IToDosDetail) => {
       >
         <ImageCompactField label={"Imagem Zoom+Slider"} name={"image"} />
 
-        <FormGroup key={"fieldsOne"}>
-          <TextField placeholder="Título" name="title" />
-          <TextField placeholder="Descrição" name="description" />
-        </FormGroup>
+        {screenState === "view" ? (
+          <>
+            <Typography variant="h1" sx={appStyle.h1(1)} gutterBottom>
+              {toDosDoc.title}
+            </Typography>
+            <Typography sx={appStyle.body1(1)} gutterBottom>
+              {toDosDoc.description}
+            </Typography>
+            <br />
+            <br />
+            <Typography sx={appStyle.body1(1)} gutterBottom>
+              {`Situação: ${toDosDoc.check}`}
+            </Typography>
+            <Typography sx={appStyle.body1(1)} gutterBottom>
+              {`Privado: ${toDosDoc.private ? "Sim" : "Não"}`}
+            </Typography>
+          </>
+        ) : (
+          <>
+            <FormGroup key={"fieldsOne"}>
+              <TextField placeholder="Título" name="title" />
+              <TextField placeholder="Descrição" multiline name="description" />
+            </FormGroup>
 
-        <FormGroup key={"fieldsTwo"}>
-          {screenState !== "create" ? (
-            <SelectField
-              name="check"
-              options={[
-                {
-                  value: "Concluída",
-                  label: "Concluída",
-                  description: "tarefa concluída",
-                },
-                {
-                  value: "Não Concluída",
-                  label: "Não Concluída",
-                  description: "tarefa não concluída",
-                },
-              ]}
-            />
-          ) : (
-            <></>
-          )}
+            <FormGroup key={"fieldsTwo"}>
+              {screenState !== "create" ? (
+                <SelectField
+                  name="check"
+                  options={[
+                    {
+                      value: "Concluída",
+                      label: "Concluída",
+                      description: "tarefa concluída",
+                    },
+                    {
+                      value: "Não Concluída",
+                      label: "Não Concluída",
+                      description: "tarefa não concluída",
+                    },
+                  ]}
+                />
+              ) : (
+                <></>
+              )}
 
-          <FormControlLabel
-            control={<Switch />}
-            label="Privado"
-            name="private"
-          />
-        </FormGroup>
+              <FormControlLabel
+                control={<Switch />}
+                label="Privado"
+                name="private"
+              />
+            </FormGroup>
+          </>
+        )}
         <div
           key={"Buttons"}
           style={{
