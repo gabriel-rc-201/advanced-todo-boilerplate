@@ -147,7 +147,7 @@ export default ({
                 e.target.src = "/images/wireframe/imagem_default.png";
               }}
               style={{
-                width: "100%",
+                width: "100px",
                 height: "auto",
                 maxWidth: isMobile ? 250 : 500,
                 maxHeight: isMobile ? 250 : 500,
@@ -251,7 +251,7 @@ export default ({
               height: isMobile
                 ? "unset"
                 : window.innerWidth < 901
-                ? window.innerWidth / 3
+                ? window.innerWidth / 7
                 : "auto",
               display: "flex",
               flexDirection: "column",
@@ -269,7 +269,7 @@ export default ({
               style={{
                 maxHeight: height,
                 height: "auto",
-                width: "100%",
+                width: "100px",
                 maxWidth: width,
               }}
             />
@@ -354,8 +354,9 @@ export default ({
         <Button
           key={"b1"}
           style={{
-            width: 150,
-            height: 50,
+            width: "fit-content",
+            height: 25,
+            padding: "21.5px 75.5px 18.9px 74.9px",
             borderRadius: "8px",
             backgroundColor: "#e26139",
             marginTop: "10px",
