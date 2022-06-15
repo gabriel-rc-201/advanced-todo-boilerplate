@@ -46,7 +46,11 @@ const ToDosDetail = (props: IToDosDetail) => {
   const theme = useTheme();
 
   const handleSubmit = (doc: IToDos) => {
-    save(doc);
+    if (!!doc.private) save(doc);
+    else {
+      doc.private = false;
+      save(doc);
+    }
   };
 
   return (
@@ -250,7 +254,9 @@ export const ToDosDetailContainer = withTracker(
       id && subHandle?.ready() ? toDosApi.findOne({ _id: id }) : {};
 
     let paragraphs = subHandle?.ready()
-      ? toDosDoc.description.split(/\r?\n/)
+      ? !!toDosDoc
+        ? toDosDoc.description.split(/\r?\n/)
+        : []
       : [];
 
     return {

@@ -28,9 +28,12 @@ class ToDosApi extends ProductBase<IToDos> {
           );
 
         const newFilter = {
-          ...filter,
-          $or: [{ createdby: user._id }, { private: false }],
+          $and: [
+            { $or: [{ createdby: user._id }, { private: false }] },
+            filter,
+          ],
         };
+
         const newOptions = {
           ...options,
           projection: {
