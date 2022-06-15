@@ -20,18 +20,28 @@ import FormGroup from "@mui/material/FormGroup";
 import { useTheme } from "@mui/material/styles";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 interface IToDosDetail {
   screenState: string;
   loading: boolean;
   isPrintView: boolean;
+  paragraphs: String[];
   toDosDoc: IToDos;
   save: (doc: IToDos, callback?: () => void) => void;
   navigate: (url: string | -1, state?: object) => void;
 }
 
 const ToDosDetail = (props: IToDosDetail) => {
-  const { isPrintView, screenState, loading, toDosDoc, save, navigate } = props;
+  const {
+    isPrintView,
+    screenState,
+    loading,
+    paragraphs,
+    toDosDoc,
+    save,
+    navigate,
+  } = props;
 
   const theme = useTheme();
 
@@ -79,128 +89,141 @@ const ToDosDetail = (props: IToDosDetail) => {
         ),
       ]}
     >
-      <SimpleForm
-        mode={screenState}
-        schema={toDosApi.getSchema()}
-        doc={toDosDoc}
-        onSubmit={handleSubmit}
-        loading={loading}
-      >
-        <ImageCompactField label={"Imagem Zoom+Slider"} name={"image"} />
-
-        {screenState === "view" ? (
-          <>
-            <Typography variant="h1" sx={appStyle.h1(1)} gutterBottom>
-              {toDosDoc.title}
-            </Typography>
-            <Typography sx={appStyle.body1(1)} gutterBottom>
-              {toDosDoc.description}
-            </Typography>
-            <br />
-            <br />
-            <Typography sx={appStyle.body1(1)} gutterBottom>
-              {`Situação: ${toDosDoc.check}`}
-            </Typography>
-            <Typography sx={appStyle.body1(1)} gutterBottom>
-              {`Privado: ${toDosDoc.private ? "Sim" : "Não"}`}
-            </Typography>
-          </>
-        ) : (
-          <>
-            <FormGroup key={"fieldsOne"}>
-              <TextField placeholder="Título" name="title" />
-              <TextField placeholder="Descrição" multiline name="description" />
-            </FormGroup>
-
-            <FormGroup key={"fieldsTwo"}>
-              {screenState !== "create" ? (
-                <SelectField
-                  name="check"
-                  options={[
-                    {
-                      value: "Concluída",
-                      label: "Concluída",
-                      description: "tarefa concluída",
-                    },
-                    {
-                      value: "Não Concluída",
-                      label: "Não Concluída",
-                      description: "tarefa não concluída",
-                    },
-                  ]}
-                />
-              ) : (
-                <></>
-              )}
-
-              <FormControlLabel
-                control={<Switch />}
-                label="Privado"
-                name="private"
-              />
-            </FormGroup>
-          </>
-        )}
-        <div
-          key={"Buttons"}
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "left",
-            paddingTop: 20,
-            paddingBottom: 20,
-          }}
+      <Box sx={{ margin: "3rem" }}>
+        <SimpleForm
+          mode={screenState}
+          schema={toDosApi.getSchema()}
+          doc={toDosDoc}
+          onSubmit={handleSubmit}
+          loading={loading}
         >
-          {!isPrintView ? (
-            <Button
-              key={"b1"}
-              style={{ marginRight: 10 }}
-              onClick={
-                screenState === "edit"
-                  ? () => navigate(`/toDos/view/${toDosDoc._id}`)
-                  : () => navigate(`/toDos/list`)
-              }
-              color={"secondary"}
-              variant="contained"
-            >
-              {screenState === "view" ? "Voltar" : "Cancelar"}
-            </Button>
-          ) : null}
+          <ImageCompactField label={"Imagem Zoom+Slider"} name={"image"} />
 
-          {!isPrintView && screenState === "view" ? (
-            <Button
-              key={"b2"}
-              onClick={() => {
-                const user = getUser();
-                if (toDosDoc.createdby !== user._id) {
-                  showNotification({
-                    type: "warnig",
-                    title: "Operação não realizada!",
-                    description:
-                      "Você não pode modificar esse To Do, ele não lhe pertence",
-                  });
-                  return;
+          {screenState === "view" ? (
+            <>
+              <Typography variant="h1" sx={appStyle.h1(1)} gutterBottom>
+                {toDosDoc.title}
+              </Typography>
+
+              {paragraphs.map((p: String) => (
+                <Typography
+                  sx={{ ...appStyle.body1(1), textIndent: "2rem" }}
+                  gutterBottom
+                >
+                  {p}
+                </Typography>
+              ))}
+
+              <br />
+              <br />
+              <Typography sx={appStyle.body1(1)} gutterBottom>
+                {`Situação: ${toDosDoc.check}`}
+              </Typography>
+              <Typography sx={appStyle.body1(1)} gutterBottom>
+                {`Privado: ${toDosDoc.private ? "Sim" : "Não"}`}
+              </Typography>
+            </>
+          ) : (
+            <>
+              <FormGroup key={"fieldsOne"}>
+                <TextField placeholder="Título" name="title" />
+                <TextField
+                  placeholder="Descrição"
+                  multiline
+                  name="description"
+                />
+              </FormGroup>
+
+              <FormGroup key={"fieldsTwo"}>
+                {screenState !== "create" ? (
+                  <SelectField
+                    name="check"
+                    options={[
+                      {
+                        value: "Concluída",
+                        label: "Concluída",
+                        description: "tarefa concluída",
+                      },
+                      {
+                        value: "Não Concluída",
+                        label: "Não Concluída",
+                        description: "tarefa não concluída",
+                      },
+                    ]}
+                  />
+                ) : (
+                  <></>
+                )}
+
+                <FormControlLabel
+                  control={<Switch />}
+                  label="Privado"
+                  name="private"
+                />
+              </FormGroup>
+            </>
+          )}
+          <div
+            key={"Buttons"}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "left",
+              paddingTop: 20,
+              paddingBottom: 20,
+            }}
+          >
+            {!isPrintView ? (
+              <Button
+                key={"b1"}
+                style={{ marginRight: 10 }}
+                onClick={
+                  screenState === "edit"
+                    ? () => navigate(`/toDos/view/${toDosDoc._id}`)
+                    : () => navigate(`/toDos/list`)
                 }
-                navigate(`/toDos/edit/${toDosDoc._id}`);
-              }}
-              color={"primary"}
-              variant="contained"
-            >
-              {"Editar"}
-            </Button>
-          ) : null}
-          {!isPrintView && screenState !== "view" ? (
-            <Button
-              key={"b3"}
-              color={"primary"}
-              variant="contained"
-              submit="true"
-            >
-              {"Salvar"}
-            </Button>
-          ) : null}
-        </div>
-      </SimpleForm>
+                color={"secondary"}
+                variant="contained"
+              >
+                {screenState === "view" ? "Voltar" : "Cancelar"}
+              </Button>
+            ) : null}
+
+            {!isPrintView && screenState === "view" ? (
+              <Button
+                key={"b2"}
+                onClick={() => {
+                  const user = getUser();
+                  if (toDosDoc.createdby !== user._id) {
+                    showNotification({
+                      type: "warnig",
+                      title: "Operação não realizada!",
+                      description:
+                        "Você não pode modificar esse To Do, ele não lhe pertence",
+                    });
+                    return;
+                  }
+                  navigate(`/toDos/edit/${toDosDoc._id}`);
+                }}
+                color={"primary"}
+                variant="contained"
+              >
+                {"Editar"}
+              </Button>
+            ) : null}
+            {!isPrintView && screenState !== "view" ? (
+              <Button
+                key={"b3"}
+                color={"primary"}
+                variant="contained"
+                submit="true"
+              >
+                {"Salvar"}
+              </Button>
+            ) : null}
+          </div>
+        </SimpleForm>
+      </Box>
     </PageLayout>
   );
 };
@@ -226,9 +249,14 @@ export const ToDosDetailContainer = withTracker(
     let toDosDoc =
       id && subHandle?.ready() ? toDosApi.findOne({ _id: id }) : {};
 
+    let paragraphs = subHandle?.ready()
+      ? toDosDoc.description.split(/\r?\n/)
+      : [];
+
     return {
       screenState,
       toDosDoc,
+      paragraphs,
       save: (doc: IToDos, callback: () => void) => {
         const selectedAction = screenState === "create" ? "insert" : "update";
         if (selectedAction === "insert") doc.check = "Não Concluída";
